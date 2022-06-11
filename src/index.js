@@ -6,16 +6,16 @@ client.commands = new Collection();
 
 require('dotenv').config();
 
-const functions = fs.readdirSync("functions").filter(file => file.endsWith(".js"));
-const eventFiles = fs.readdirSync("events").filter(file => file.endsWith(".js"));
-const commandFolders = fs.readdirSync("commands");
+const functions = fs.readdirSync("./src/functions").filter(file => file.endsWith(".js"));
+const eventFiles = fs.readdirSync("./src/events").filter(file => file.endsWith(".js"));
+const commandFolders = fs.readdirSync("./src/commands");
 
 (async () => {
     for (file of functions) {
         require(`./functions/${file}`)(client);
     }
-    client.handleEvents(eventFiles, "events");
-    client.handleCommands(commandFolders, "commands");
+    client.handleEvents(eventFiles, "./src/events");
+    client.handleCommands(commandFolders, "./src/commands");
     client.login(process.env.token)
     global.queue = [];
     global.rejected = [];
